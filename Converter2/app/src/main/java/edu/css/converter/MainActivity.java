@@ -1,5 +1,6 @@
 package edu.css.converter;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,18 +14,18 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import static java.lang.*;
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText inBills;
     private TextView outBills;
+    pricate EditText
 
-    double rateUS = getRate("USD");
-    double rateEU = getRate("EUR");
+    //double rateUS = getXRate("USD", "EUR");
+    //double rateEU = getXRate("EUR", "USD");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,16 @@ public class MainActivity extends AppCompatActivity {
         inBills = findViewById(R.id.inBills);
         outBills = findViewById(R.id.outBills);
 
-        ArrayList curs = new ArrayList<>();
+        inBills.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    inBills.setText("");
+                }
+            }
+        });
 
+
+        ArrayList curs = new ArrayList<>();
 
     }
 
@@ -52,39 +61,66 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private double calcRate(String base, String comp, double amt) {
-        double rate = getRate(base, comp);
+        //double rate = getXRate(base, comp);
+        double rate = .085;
         double outMoney = amt / rate;
+        return outMoney;
     }
 
-    private double getRate(String base, String comp) {
-        //RequestQueue queue = Volley.newRequestQueue(this);
+    protected class exchRate extends AsyncTask<Void, Void, JSONObject>
+    {
+        @Override
+        protected JSONObject doInBackground(String base, String comp)
+        {
 
-        String strurl = "http://api.fixer.io/latest?base=" + base + "&symbols=" + comp;
-        URLConnection urlConn;
-        BufferedReader buffRead = null;
+            String str="https://api.fixer.io/latest?symbols=" + comp + ",base=" + base;
+            URLConnection urlConn = null;
+            BufferedReader bufferedReader = null;
+            try
+            {
+                URL url = new URL(str);
+                urlConn = url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 
-        try {
-            URL url = new URL(strurl);
-            urlConn = url.openConnection();
-            buffRead = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                StringBuffer stringBuffer = new StringBuffer();
+                String line;
+                while ((line = bufferedReader.readLine()) != null)
+                {
+                    stringBuffer.append(line);
+                }
 
-            Stringbuffer strBuff = new StringBuffer();
-            String lin;
-            while ((lin = buffRead.readLine()) != null) {
-                strBuff.append(lin);
+                return new JSONObject(stringBuffer.toString());
             }
-            return new JSONObject(strBuff.toString());
-        } catch(JSONException e) {
-            Log.e("Converter", "DataGet", e);
-            return null;
-        } finally {
-            if(buffRead != null) {
+            catch(Exception ex)
+            {
+                Log.e("rates", comp, ex);
+                return null;
+            }
+            finally
+            {
+                if(bufferedReader != null)
+                {
+                    try {
+                        bufferedReader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject response)
+        {
+            if(response != null)
+            {
                 try {
-                    buffRead.close();
-                } catch(IOException e) {
-                    e.printStackTrace();
+                    ("rates", "Success: " + response.getString("yourJsonElement") );
+                } catch (JSONException ex) {
+                    Log.e("App", "Failure", ex);
                 }
             }
         }
     }
+
 }
