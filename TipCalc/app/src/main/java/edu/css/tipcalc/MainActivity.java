@@ -8,6 +8,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     private int num = 0;
@@ -77,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
         tot = (bill + tip)/party;
 
-        tipAmt.setText(Double.toString(tip));
-        totAmt.setText(Double.toString(tot));
+        NumberFormat USFormat = NumberFormat.getCurrencyInstance(Locale.US);
+
+        tipAmt.setText(USFormat.format(tip));
+        totAmt.setText(USFormat.format(tot));
     }
 
     public void onClick(View view) {

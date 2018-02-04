@@ -1,31 +1,22 @@
 package edu.css.converter;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText inBills;
     private TextView outBills;
-    pricate EditText
 
-    //double rateUS = getXRate("USD", "EUR");
-    //double rateEU = getXRate("EUR", "USD");
+    double rateUS = .80509;
+    double rateEU = 1.2492;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +25,20 @@ public class MainActivity extends AppCompatActivity {
 
         inBills = findViewById(R.id.inBills);
         outBills = findViewById(R.id.outBills);
+        final Button EUconv = findViewById(R.id.buttonEuro);
+        final Button USconv = findViewById(R.id.buttonDolla);
+
+        EUconv.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                buttonEuroClick(view);
+            }
+        });
+
+        USconv.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                buttonDollaClick(view);
+            }
+        });
 
         inBills.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
@@ -44,83 +49,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        ArrayList curs = new ArrayList<>();
-
     }
 
     public void buttonDollaClick(View view){
         double startMoney = Double.parseDouble(inBills.getText().toString());
         double outMoney = calcRate("USD", "EUR", startMoney);
-        outBills.setText(Double.toString(outMoney));
+        NumberFormat USFormat = NumberFormat.getCurrencyInstance(Locale.US);
+        String oMon = USFormat.format(outMoney);
+        outBills.setText(oMon);
     }
 
     public void buttonEuroClick(View view) {
         double startMoney = Double.parseDouble(inBills.getText().toString());
         double outMoney = calcRate("EUR", "USD", startMoney);
-        outBills.setText(Double.toString(outMoney));
+        NumberFormat EUFormat = NumberFormat.getCurrencyInstance(Locale.ENGLISH);
+        String oMon = EUFormat.format(outMoney);
+        outBills.setText(oMon);
     }
 
     private double calcRate(String base, String comp, double amt) {
-        //double rate = getXRate(base, comp);
-        double rate = .085;
-        double outMoney = amt / rate;
-        return outMoney;
-    }
-
-    protected class exchRate extends AsyncTask<Void, Void, JSONObject>
-    {
-        @Override
-        protected JSONObject doInBackground(String base, String comp)
-        {
-
-            String str="https://api.fixer.io/latest?symbols=" + comp + ",base=" + base;
-            URLConnection urlConn = null;
-            BufferedReader bufferedReader = null;
-            try
-            {
-                URL url = new URL(str);
-                urlConn = url.openConnection();
-                bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-
-                StringBuffer stringBuffer = new StringBuffer();
-                String line;
-                while ((line = bufferedReader.readLine()) != null)
-                {
-                    stringBuffer.append(line);
-                }
-
-                return new JSONObject(stringBuffer.toString());
-            }
-            catch(Exception ex)
-            {
-                Log.e("rates", comp, ex);
-                return null;
-            }
-            finally
-            {
-                if(bufferedReader != null)
-                {
-                    try {
-                        bufferedReader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+        double oMoney;
+        if (base == "USD") {
+            oMoney = amt * rateEU;
+        } else {
+            oMoney = amt * rateUS;
         }
-
-        @Override
-        protected void onPostExecute(JSONObject response)
-        {
-            if(response != null)
-            {
-                try {
-                    ("rates", "Success: " + response.getString("yourJsonElement") );
-                } catch (JSONException ex) {
-                    Log.e("App", "Failure", ex);
-                }
-            }
-        }
+        return oMoney;
     }
-
 }
