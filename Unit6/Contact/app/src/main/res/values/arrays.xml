@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="icons">
+        <item>@mipmap/earrow</item>
+        <item>@mipmap/pjoss</item>
+        <item>@mipmap/mkitz</item>
+    </array>
+    <string-array name="names">
+        <item>Eleanor Arroway 651-636-8989</item>
+        <item>Palmer Joss 763-564-9000</item>
+        <item>Michael Kitz 218-724-7435</item>
+    </string-array>
+    <string-array name="numbers">
+        <item>6516368989</item>
+        <item>7635649000</item>
+        <item>2187247435</item>
+    </string-array>
+    <string-array name="messages">
+        <item>Hi</item>
+        <item>I like aliens</item>
+        <item>Are you my father?</item>
+        <item>Can I have some funding?</item>
+    </string-array>
+</resources>
