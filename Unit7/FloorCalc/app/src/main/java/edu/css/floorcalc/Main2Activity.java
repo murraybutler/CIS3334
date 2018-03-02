@@ -7,9 +7,14 @@ import android.widget.TextView;
 
 import edu.css.floorcalc.flrDimension;
 
+/*
+ * Secondary activity for flooring calculation output
+ */
+
 public class Main2Activity extends AppCompatActivity {
 
     TextView outPut;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

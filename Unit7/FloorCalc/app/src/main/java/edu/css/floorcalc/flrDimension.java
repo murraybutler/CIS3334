@@ -5,17 +5,20 @@ import android.os.Parcelable;
 
 /**
  * Created by murray.butler on 2/28/18.
+ * A simple class for the dimensions of a floor
  */
 
 public class flrDimension implements Parcelable{
     private double width;
     private double length;
 
+    // Basic constructor
     public flrDimension(double iwidth, double ilength) {
         this.width = iwidth;
         this.length = ilength;
     }
 
+    // getters and setters
     public double getWidth() {
         return width;
     }
@@ -24,12 +27,13 @@ public class flrDimension implements Parcelable{
         return length;
     }
 
+    // Parcel constructor
     public flrDimension(Parcel in) {
         this.width = in.readDouble();
         this.length = in.readDouble();
     }
 
-
+    //Parcel methods
     @Override
     public int describeContents() {
         return 0;

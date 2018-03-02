@@ -27,7 +27,11 @@ public class MainActivity extends AppCompatActivity {
         rmwidth = findViewById(R.id.rmWidth);
         flrBtn = (Button) findViewById(R.id.buyIt);
 
-
+        /*
+        Listens for the click event and parcels object to second activity.
+        @param OnClickListener
+        sub method handles the click event
+         */
         flrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
