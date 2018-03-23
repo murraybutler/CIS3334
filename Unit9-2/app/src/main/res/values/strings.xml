@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Unit9</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="Add">adding study mates is not available yet.</string>
+    <string name="addAct">add study mate</string>
+    <string name="Delete">deleting study mates is not available yet.</string>
+    <string name="deleteAct">delete study mate</string>
+    <string name="Settings">adjust settings</string>
+    <string name="EMail">email contact</string>
+    <string name="SMS">sms message</string>
+</resources>
