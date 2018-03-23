@@ -5,33 +5,29 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/add"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="@string/Add"/>
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/delete"
+            android:icon="@drawable/ic_remove_black_24dp"
+            android:title="@string/Delete"/>
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/setter"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/Settings"/>
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/mail"
+                android:icon="@drawable/ic_email_black_24dp"
+                android:title="@string/EMail"/>
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/sms"
+                android:icon="@drawable/ic_sms_black_24dp"
+                android:title="@string/SMS"/>
         </menu>
     </item>
 

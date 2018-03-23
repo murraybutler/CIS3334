@@ -17,6 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+
+import java.lang.reflect.Method;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -107,18 +110,23 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        String act;
+        String msg;
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.setter) {
+            startActivity(new Intent(Settings.ACTION_SETTINGS));
+        } else if (id == R.id.add) {
+            act = getResources().getString(R.string.addAct);
+            msg = getResources().getString(R.string.Add);
+            snacky(act,msg);
+        } else if (id == R.id.delete) {
+            act = getResources().getString(R.string.deleteAct);
+            msg = getResources().getString(R.string.Delete);
+            snacky(act,msg);
+        } else if (id == R.id.mail) {
+            maily();
+        } else if (id == R.id.sms) {
+            smsy();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -134,17 +142,31 @@ public class MainActivity extends AppCompatActivity
 
     private void maily() {
         Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:someone@somplace.com"));
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(Intent.createChooser(intent, "Email Intent"));
+        intent.setData(Uri.parse("mailto:"));
+        intent.setType("text/plain");
+        try {
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+                finish();
+                Log.i("Email Sent", "");
+            }
+        }catch (android.content.ActivityNotFoundException ex) {
+            snacky("Email App","Email app failed to find");
         }
     }
 
     private void smsy() {
+        Log.i("Send SMS","");
         Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("smsto:1234567"));
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
+        try {
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+                finish();
+                Log.i("SMS Sent", "");
+            }
+        }catch (android.content.ActivityNotFoundException ex) {
+            snacky("SMS App","SMS app failed to find");
         }
     }
 }
