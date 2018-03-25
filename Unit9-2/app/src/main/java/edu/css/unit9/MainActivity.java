@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void maily() {
+        Log.v("Send Email","");
         Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
         intent.setType("text/plain");
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
                 finish();
-                Log.i("Email Sent", "");
+                Log.v("Email Sent", "");
             }
         }catch (android.content.ActivityNotFoundException ex) {
             snacky("Email App","Email app failed to find");
@@ -156,14 +157,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void smsy() {
-        Log.i("Send SMS","");
+        Log.v("Send SMS","");
         Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("smsto:1234567"));
         try {
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
                 finish();
-                Log.i("SMS Sent", "");
+                Log.v("SMS Sent", "");
             }
         }catch (android.content.ActivityNotFoundException ex) {
             snacky("SMS App","SMS app failed to find");
