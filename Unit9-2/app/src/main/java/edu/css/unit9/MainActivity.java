@@ -134,12 +134,20 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * A method to return snackbar messages to the user
+     * @param act String action msg
+     * @param msg String text of msg
+     */
     private void snacky(String act, String msg) {
         Snackbar.make(getWindow().getDecorView(), msg, Snackbar.LENGTH_LONG)
                 .setAction(act, null)
                 .show();
     }
 
+    /**
+     * A Method to call the mailer intent
+     */
     private void maily() {
         Log.v("Send Email","");
         Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
@@ -156,6 +164,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * A method to call the SMS intent
+     */
     private void smsy() {
         Log.v("Send SMS","");
         Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
