@@ -151,8 +151,8 @@ public class MainActivity extends AppCompatActivity
     private void maily() {
         Log.v("Send Email","");
         Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:"));
-        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_EMAIL, "someone@someplace.org");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "test message");
         try {
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
@@ -170,7 +170,8 @@ public class MainActivity extends AppCompatActivity
     private void smsy() {
         Log.v("Send SMS","");
         Intent intent = new Intent(android.content.Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("smsto:1234567"));
+        intent.setData(Uri.parse("smsto:"));
+        intent.putExtra("sms_body", "Test test test");
         try {
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
