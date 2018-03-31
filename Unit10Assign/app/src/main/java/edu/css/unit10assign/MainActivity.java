@@ -8,11 +8,20 @@ import android.widget.Toast;
 
 import java.util.List;
 
+/**
+ * MainActivty class for database project
+ * @author murray.butler
+ * @version 1.0
+ */
 public class MainActivity extends AppCompatActivity {
 
     private User user;
     private AppDatabase database;
 
+    /**
+     * Startup method for project
+     * @param savedInstanceState Bundle Loadable Bundle of data for saved instance of app
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Method to pull all user data and present first entry in textview.
+     */
     private void updateFirstUserData() {
         List<User> user = database.userDao().getAllUser();
         List<Trophy> trophiesForUser = database.trophyDao().findTrophiesForUser(user.get(0).id);
@@ -48,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to add trophy to current user
+     * @param view Context of view to add trophy in.
+     */
     public void onClick(View view){
         if (view.getId()==R.id.addtrophybutton) {
             // TODO add trophy
@@ -66,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
         updateFirstUserData();
 
     }
+
+    /**
+     * Destructor for class
+     */
     @Override
     protected void onDestroy() {
         AppDatabase.destroyInstance();
